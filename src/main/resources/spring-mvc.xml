@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	<context:property-placeholder location="classpath:properties/*.properties" />
+
+	<!-- 自动扫描(自动注入)，扫描me.gacl.service这个包以及它的子包的所有使用@Service注解标注的类 -->
+	<context:component-scan base-package="com.tylx.art" />
+
+	<mvc:annotation-driven />
+
+
+	<!-- <mvc:interceptors> -->
+	<!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->
+	<!-- <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" 
+		/> -->
+	<!-- 如果不定义 mvc:mapping path 将拦截所有的URL请求 -->
+	<!-- <bean class="com.tylx.art.security.AuthInterceptor"></bean> -->
+	<!-- </mvc:interceptors> -->
+
+
+	<mvc:resources mapping="/styles/**" location="/styles/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/scripts/**" location="/scripts/" />
+	<mvc:resources mapping="/images/**" location="/images/" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 短信发送参数配置 -->
+	<bean class="com.tylx.art.common.util.SmsUtil">
+		<property name="url" value="http://222.73.117.156:80/msg/HttpBatchSendSM" />
+		<property name="account" value="cdtianyu1667" />
+		<property name="pswd" value="CDtylx20168888" />
+		<property name="freeSignName" value="[天誉立信]" />
+	</bean>
+</beans>
